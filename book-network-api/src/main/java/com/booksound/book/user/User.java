@@ -1,5 +1,7 @@
 package com.booksound.book.user;
 
+import com.booksound.book.book.Book;
+import com.booksound.book.history.BookTransactionHistory;
 import com.booksound.book.role.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -29,18 +31,27 @@ import java.util.stream.Collectors;
 public class User implements UserDetails, Principal {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Integer id;
     private String firstName;
     private String lastName;
     private LocalDate dateOfBirth;
+
     @Column(unique = true)
     private String email;
     private String password;
     private Boolean accountLocked;
     private Boolean enabled;
+
     @ManyToMany(fetch = FetchType.EAGER )
     private List<Role> roles;
+
+    @OneToMany(mappedBy = "owner")
+    private List<Book> books;
+
+    @OneToMany(mappedBy = "user")
+    private List<BookTransactionHistory> histories;
+
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdDate;

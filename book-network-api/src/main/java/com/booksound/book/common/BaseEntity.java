@@ -1,39 +1,41 @@
-package com.booksound.book.role;
+package com.booksound.book.common;
 
-import com.booksound.book.user.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@Entity
+@AllArgsConstructor
+@SuperBuilder
+@MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class Role {
+public class BaseEntity {
     @Id
     @GeneratedValue
     private Integer id;
-    private String name;
-    @ManyToMany(mappedBy = "roles")
-    @JsonIgnore
-    private List<User> users;
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdDate;
 
-    @LastModifiedDate
+    @org.springframework.data.annotation.LastModifiedDate
     @Column(insertable = false)
-    private LocalDateTime lastModifiedDate;
+    private LocalDateTime LastModifiedDate;
 
+    @CreatedBy
+    @Column(nullable = false, updatable = false)
+    private Integer createdBy;
+
+    @LastModifiedBy
+    @Column(insertable = false)
+    private Integer lastModifiedBy;
 }
