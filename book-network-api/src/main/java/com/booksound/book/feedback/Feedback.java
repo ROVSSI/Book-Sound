@@ -15,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class Feedback extends BaseEntity {
 
-    private String note;
+    private Double note;
     private String comment;
 
     @ManyToOne

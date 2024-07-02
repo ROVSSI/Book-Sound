@@ -28,6 +28,6 @@ public class BookTransactionHistory extends BaseEntity {
     @JoinColumn(name = "book_id")
     private Book book;
 
-    private Boolean returned;
-    private Boolean returnApproved;
+    private boolean returned;
+    private boolean returnApproved;
 }
