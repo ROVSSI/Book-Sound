@@ -1,5 +1,6 @@
 package com.booksound.book.book;
 
+import com.booksound.book.file.FileUtils;
 import com.booksound.book.history.BookTransactionHistory;
 import org.springframework.stereotype.Service;
 
@@ -24,9 +25,10 @@ public class BookMapper {
                 .synopsis(book.getSynopsis())
                 .isbn(book.getIsbn())
                 .rate(book.getRate())
-                .archived(book.getArchived())
-                .shareable(book.getShareable())
+                .archived(book.isArchived())
+                .shareable(book.isShareable())
                 .owner(book.getOwner().fullName())
+                .cover(FileUtils.readFileFromLocation(book.getBookCover()))
                 .build();
     }
 
