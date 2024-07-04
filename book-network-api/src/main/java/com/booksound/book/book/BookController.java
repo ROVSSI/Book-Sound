@@ -1,7 +1,6 @@
 package com.booksound.book.book;
 
 import com.booksound.book.common.PageResponse;
-import com.booksound.book.exception.OperationNotPermittedException;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -13,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
-@RequestMapping("Book")
+@RequestMapping("book")
 @RequiredArgsConstructor
 @Tag(name = "Book")
 public class BookController {
