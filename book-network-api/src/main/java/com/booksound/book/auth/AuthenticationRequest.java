@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class AutenticationRequest {
+public class AuthenticationRequest {
 
     @Email(message = "Email is not formatted")
     @NotEmpty(message = "Email is Mandatory")
