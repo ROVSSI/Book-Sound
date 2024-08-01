@@ -1,21 +1,20 @@
 import {Component, OnInit} from '@angular/core';
+import {PageResponseBookResponse} from "../../../../services/models/page-response-book-response";
 import {BookService} from "../../../../services/services/book.service";
 import {Router} from "@angular/router";
-import {PageResponseBookResponse} from "../../../../services/models/page-response-book-response";
 import {BookResponse} from "../../../../services/models/book-response";
 
 @Component({
-  selector: 'app-book-list',
-  templateUrl: './book-list.component.html',
-  styleUrl: './book-list.component.css'
+  selector: 'app-my-books',
+  templateUrl: './my-books.component.html',
+  styleUrl: './my-books.component.css'
 })
-export class BookListComponent implements OnInit {
+export class MyBooksComponent implements OnInit{
   bookResponse: PageResponseBookResponse = {};
   page = 0;
   size = 4;
   pages: Array<number> = [];
-  message = '';
-  level = '';
+
 
   constructor(
     private bookService: BookService,
@@ -30,7 +29,7 @@ export class BookListComponent implements OnInit {
 
 
   private findAllBooks() {
-    this.bookService.findAllBooks({
+    this.bookService.findAllBooksByOwner({
       page: this.page,
       size: this.size
     }).subscribe({
@@ -39,23 +38,6 @@ export class BookListComponent implements OnInit {
         this.pages = Array(this.bookResponse.totalPages)
           .fill(0)
           .map((x, i) => i);
-      }
-    })
-  }
-
-  borrowBook(book: BookResponse) {
-    this.message = '';
-    this.bookService.borrowBook({
-      'book-id': book.id as number
-    }).subscribe({
-      next: () => {
-        this.level = 'success';
-        this.message = 'Book successfully added to your borrowing list';
-      },
-      error: (err) =>{
-        console.log(err);
-        this.level = 'error';
-        this.message = err.error.error;
       }
     })
   }
@@ -92,5 +74,17 @@ export class BookListComponent implements OnInit {
 
   get isLastPage(): boolean {
     return this.page == this.bookResponse.totalPages as number - 1;
+  }
+
+  archiveBook(book: BookResponse) {
+
+  }
+
+  shareBook(book: BookResponse) {
+
+  }
+
+  editBook(book: BookResponse) {
+
   }
 }
