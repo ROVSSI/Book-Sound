@@ -151,7 +151,7 @@ public class BookService {
         if (Objects.equals(book.getOwner().getId(), user.getId())) {
             throw new OperationNotPermittedException("You can not borrow your own book");
         }
-        final boolean isAlreadyBorrowed = transactionHistoryRepository.isAlreadyBorrowed(book, user.getId());
+        final boolean isAlreadyBorrowed = transactionHistoryRepository.isAlreadyBorrowedByUser(bookId, user.getId());
         if (isAlreadyBorrowed) {
             throw new OperationNotPermittedException("The requested book is already borrowed");
         }
@@ -202,8 +202,10 @@ public class BookService {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new EntityNotFoundException("No book found with ID:: " + bookId));
         User user = ((User) connectedUser.getPrincipal());
-        var bookCover = fileStorageService.saveFile(file, user.getId());
-        book.setBookCover(bookCover);
+        var profilePicture = fileStorageService.saveFile(file, bookId, user.getId());
+        book.setBookCover(profilePicture);
         bookRepository.save(book);
     }
+
+
 }

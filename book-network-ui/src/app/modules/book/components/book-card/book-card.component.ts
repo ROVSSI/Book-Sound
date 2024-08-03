@@ -32,6 +32,7 @@ export class BookCardComponent {
     return this._manage;
   }
 
+  @Input()
   set manage(value: boolean) {
     this._manage = value;
   }
