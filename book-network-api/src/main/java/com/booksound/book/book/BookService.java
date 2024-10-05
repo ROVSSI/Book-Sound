@@ -202,10 +202,12 @@ public class BookService {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new EntityNotFoundException("No book found with ID:: " + bookId));
         User user = ((User) connectedUser.getPrincipal());
-        var profilePicture = fileStorageService.saveFile(file, bookId, user.getId());
-        book.setBookCover(profilePicture);
+        var bookCover = fileStorageService.saveFile(file, user.getId());
+        book.setBookCover(bookCover);
         bookRepository.save(book);
     }
+
+
 
 
 }
